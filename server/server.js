@@ -10,6 +10,8 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
+const data = require('./data')
+
 const Root = () => ''
 
 try {
@@ -40,6 +42,10 @@ const middleware = [
 ]
 
 middleware.forEach((it) => server.use(it))
+
+server.get('/api/v1/products', (req, res) => {
+  res.json(data)
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
