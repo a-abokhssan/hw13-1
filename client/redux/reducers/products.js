@@ -18,11 +18,19 @@ export default (state = initialState, action) => {
         ...state,
         selection: { ...state.selection, [action.id]: (state.selection[action.id] || 0) + 1 }
       }
-    case REMOVE_SELECTION:
+    case REMOVE_SELECTION: {
+      const newSelection = {
+        ...state.selection,
+        [action.id]: state.selection[action.id] - 1
+      }
+      if (newSelection[action.id] <= 0) {
+        delete newSelection[action.id]
+      }
       return {
         ...state,
-        selection: { ...state.selection, [action.id]: (state.selection[action.id] || 0) - 1 }
+        selection: newSelection
       }
+    }
     default:
       return state
   }
