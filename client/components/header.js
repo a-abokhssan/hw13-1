@@ -1,15 +1,36 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setBase } from '../redux/reducers/products'
 
 const Header = () => {
+  const dispatch = useDispatch()
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
+  const base = useSelector((s) => s.products.base)
+  const rates = useSelector((s) => s.products.rates)
   const getPrice = (id) => list.find((it) => it.id === id).price
-  const sum = Object.entries(selection).reduce((acc, [id, qty]) => acc + getPrice(id) * qty, 0)
+  const sum = Object.entries(selection).reduce(
+    (acc, [id, qty]) => acc + getPrice(id) * qty * (rates[base] || 1),
+    0
+  )
   const numberOfItems = Object.values(selection).reduce((acc, rec) => acc + rec, 0)
   return (
     <div>
-      <div>{sum !== 0 && sum}</div>
+      {['CAD', 'USD', 'EUR'].map((it) => {
+        return (
+          <button
+            key={it}
+            type="button"
+            className={`mx-4 ${base === it ? 'text-red-700' : ''}`}
+            onClick={() => {
+              dispatch(setBase(it))
+            }}
+          >
+            {it}
+          </button>
+        )
+      })}
+      <div>{sum !== 0 && sum.toFixed(2)}</div>
       <div>{numberOfItems !== 0 && numberOfItems}</div>
     </div>
   )

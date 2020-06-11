@@ -4,8 +4,15 @@ import { addSelection, removeSelection } from '../redux/reducers/products'
 
 const Cards = () => {
   const dispatch = useDispatch()
+  const base = useSelector((s) => s.products.base)
+  const rates = useSelector((s) => s.products.rates)
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
+  const baseSymb = {
+    USD: '$',
+    EUR: '€',
+    CAD: 'C$'
+  }
   return (
     <div className="flex flex-wrap content-center justify-center">
       {list.map((card) => {
@@ -18,6 +25,9 @@ const Cards = () => {
               <img className="h-32" src={card.image} alt={card.title} />
             </div>
             <div>{card.title}</div>
+            <div>
+              {(card.price * (rates[base] || 1)).toFixed(2)} {baseSymb[base] || '€'}
+            </div>
             <div className="flex justify-between p-10">
               <button
                 type="button"
