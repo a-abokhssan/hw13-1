@@ -34,22 +34,24 @@ const Header = () => {
       <button type="button">
         <Link to="/basket">Basket</Link>
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(setStatus('Price'))
-        }}
-      >
-        price
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(setStatus('A-z'))
-        }}
-      >
-        A-z
-      </button>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            dispatch(setStatus('Price'))
+          }}
+        >
+          price
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            dispatch(setStatus('A-z'))
+          }}
+        >
+          A-z
+        </button>
+      </div>
       <div>{sum !== 0 && sum.toFixed(2)}</div>
       <div>{numberOfItems !== 0 && numberOfItems}</div>
     </div>

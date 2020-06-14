@@ -3,12 +3,9 @@ import { useSelector } from 'react-redux'
 import Header from './header'
 
 const Basket = () => {
-  /* const dispatch = useDispatch() */
   const base = useSelector((s) => s.products.base)
   const basket = useSelector((s) => s.products.basket)
   const rates = useSelector((s) => s.products.rates)
-  /*   const list = useSelector((s) => s.products.list) */
-  /* const selection = useSelector((s) => s.products.selection) */
   const baseSymb = {
     USD: '$',
     EUR: '€',
