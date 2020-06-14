@@ -13,24 +13,26 @@ const Basket = () => {
   }
   const basketsArray = Object.values(basket)
   return (
-    <div className="flex flex-wrap content-center justify-center">
+    <div>
       <Header />
-      {basketsArray.map((card) => {
-        return (
-          <div
-            key={card.it}
-            className="flex flex-col border-2 border-solid border-black w-64 h-64 p-2 m-4"
-          >
-            <div className="flex justify-center">
-              <img className="h-32" src={card.image} alt={card.title} />
+      <div className="flex flex-wrap content-center justify-center">
+        {basketsArray.map((card) => {
+          return (
+            <div
+              key={card.it}
+              className="flex flex-col border-2 border-solid border-black w-64 h-64 p-2 m-4"
+            >
+              <div className="flex justify-center">
+                <img className="h-32" src={card.image} alt={card.title} />
+              </div>
+              <div>{card.title}</div>
+              <div>
+                {(card.price * (rates[base] || 1)).toFixed(2)} {baseSymb[base] || '€'}
+              </div>
             </div>
-            <div>{card.title}</div>
-            <div>
-              {(card.price * (rates[base] || 1)).toFixed(2)} {baseSymb[base] || '€'}
-            </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </div>
   )
 }
