@@ -5,16 +5,21 @@ const ADD_SELECTION = 'ADD_SELECTION'
 const REMOVE_SELECTION = 'REMOVE_SELECTION'
 const GET_RATES = 'GET_RATES'
 const SET_BASE = 'SET_BASE'
+const SET_STATUS = 'SET_STATUS'
 
 const initialState = {
   list: [],
   selection: {},
   rates: {},
-  base: ''
+  base: '',
+  basket: [],
+  status: ''
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_STATUS:
+      return { ...state, status: action.status }
     case SET_BASE:
       return { ...state, base: action.base }
     case GET_PRODUCTS:
@@ -24,7 +29,8 @@ export default (state = initialState, action) => {
     case ADD_SELECTION:
       return {
         ...state,
-        selection: { ...state.selection, [action.id]: (state.selection[action.id] || 0) + 1 }
+        selection: { ...state.selection, [action.id]: (state.selection[action.id] || 0) + 1 },
+        basket: { ...state.basket, [action.id]: action.basket }
       }
     case REMOVE_SELECTION: {
       const newSelection = {
@@ -44,8 +50,8 @@ export default (state = initialState, action) => {
   }
 }
 
-export function addSelection(id) {
-  return { type: ADD_SELECTION, id }
+export function addSelection(id, basket) {
+  return { type: ADD_SELECTION, id, basket }
 }
 
 export function removeSelection(id) {
@@ -70,4 +76,23 @@ export function getRates() {
 
 export function setBase(base) {
   return { type: SET_BASE, base }
+}
+
+export function setStatus(status) {
+  return { type: SET_STATUS, status }
+}
+
+export function sortElements(arr, key) {
+  switch (key) {
+    case 'Price':
+      return arr.sort((a, b) => b.price - a.price)
+    case 'A-z':
+      return arr.sort((a, b) => {
+        if (a.title.toLowerCase() < b.title.toLowerCase()) return -1
+        if (a.title.toLowerCase() > b.title.toLowerCase()) return 1
+        return 0
+      })
+    default:
+      return arr
+  }
 }

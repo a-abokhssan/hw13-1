@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setBase } from '../redux/reducers/products'
+import { Link } from 'react-router-dom'
+import { setBase, setStatus } from '../redux/reducers/products'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -30,6 +31,25 @@ const Header = () => {
           </button>
         )
       })}
+      <button type="button">
+        <Link to="/basket">Basket</Link>
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(setStatus('Price'))
+        }}
+      >
+        price
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(setStatus('A-z'))
+        }}
+      >
+        A-z
+      </button>
       <div>{sum !== 0 && sum.toFixed(2)}</div>
       <div>{numberOfItems !== 0 && numberOfItems}</div>
     </div>
