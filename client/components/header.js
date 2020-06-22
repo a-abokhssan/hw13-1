@@ -52,8 +52,8 @@ const Header = () => {
           A-z
         </button>
       </div>
-      <div>{sum !== 0 && sum.toFixed(2)}</div>
-      <div>{numberOfItems !== 0 && numberOfItems}</div>
+      <div>{sum > 0 && sum.toFixed(2)}</div>
+      <div>{numberOfItems > 0 && numberOfItems}</div>
     </div>
   )
 }

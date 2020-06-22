@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
+const { writeFile, readFile } = require('fs').promises
 const data = require('./data')
 
 const Root = () => ''
@@ -34,6 +35,21 @@ let connections = []
 const port = process.env.PORT || 8090
 const server = express()
 
+const saveLogs = (logs) => {
+  return writeFile(`${__dirname}/logs.json`, JSON.stringify(logs), {
+    encoding: 'utf8'
+  })
+}
+
+const readLogs = async () => {
+  try {
+    const info = await readFile(`${__dirname}/logs.json`, { encoding: 'utf8' })
+    return JSON.parse(info)
+  } catch (e) {
+    return []
+  }
+}
+
 const middleware = [
   cors(),
   express.static(path.resolve(__dirname, '../dist/assets')),
@@ -46,6 +62,18 @@ middleware.forEach((it) => server.use(it))
 
 server.get('/api/v1/products', (req, res) => {
   res.json(data.slice(0, 10))
+})
+
+server.get('/api/v1/logs', async (req, res) => {
+  const logs = await readLogs()
+  res.json(logs)
+})
+
+server.post('/api/v1/logs', async (req, res) => {
+  const oldLogs = await readLogs()
+  const newLog = req.body
+  await saveLogs([...oldLogs, newLog])
+  res.json(req.body)
 })
 
 server.get('/api/v1/rates', async (req, res) => {
