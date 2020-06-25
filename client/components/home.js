@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import Header from './header'
 import Cards from './cards'
 import { getProducts, getRates } from '../redux/reducers/products'
-// import wave from '../assets/images/wave.jpg'
 
 const Home = () => {
   const dispatch = useDispatch()

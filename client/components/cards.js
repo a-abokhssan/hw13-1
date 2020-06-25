@@ -20,7 +20,7 @@ const Cards = () => {
       {sortElements(list, status).map((card) => {
         return (
           <div
-            key={card.it}
+            key={card.id}
             className="flex flex-col border-2 border-solid border-black w-64 h-64 p-2 m-4"
           >
             <div className="flex justify-center">
