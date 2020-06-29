@@ -7,6 +7,7 @@ const GET_RATES = '@@GET_RATES'
 const SET_BASE = 'SET_BASE'
 const SET_STATUS = 'SET_STATUS'
 const GET_LOGS = '@@GET_LOGS'
+const DELETE_LOGS = '@@DELETE_LOGS'
 
 const initialState = {
   list: [],
@@ -30,6 +31,8 @@ export default (state = initialState, action) => {
       return { ...state, rates: action.rates }
     case GET_LOGS:
       return { ...state, logs: action.logs }
+    case DELETE_LOGS:
+      return { ...state, logs: [] }
     case ADD_SELECTION:
       return {
         ...state,
@@ -89,6 +92,13 @@ export function getLogs() {
     axios('/api/v1/logs').then(({ data }) => {
       dispatch({ type: GET_LOGS, logs: data })
     })
+  }
+}
+
+export function deleteLogs() {
+  axios.delete('/api/v1/logs')
+  return (dispatch) => {
+    dispatch({ type: DELETE_LOGS })
   }
 }
 
