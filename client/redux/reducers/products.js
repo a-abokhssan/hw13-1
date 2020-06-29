@@ -64,8 +64,8 @@ export function addSelection(id, basket) {
   return { type: ADD_SELECTION, id, basket }
 }
 
-export function removeSelection(id) {
-  return { type: REMOVE_SELECTION, id }
+export function removeSelection(id, basket) {
+  return { type: REMOVE_SELECTION, id, basket }
 }
 
 export function getProducts() {
